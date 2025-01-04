@@ -1,0 +1,75 @@
+HTML Code :-
+<template>
+    <div class="slds-box">
+        <template if:true={mapMarkers.length}>
+            <lightning-map
+            map-markers={mapMarkers}
+            selected-marker-value={selectMarker}
+            markers-title={marketTitle}
+            onmarkerselect={callMarkerSelect}>
+            </lightning-map>
+        </template>
+        <template if:false={mapMarkers.length}>
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                <h2>No Data Found</h2>
+            </div>
+        </template>
+    </div>
+</template>
+
+JS Code :-
+import { LightningElement , wire } from 'lwc';
+import getAccounts from '@salesforce/apex/MapHandler.getAccounts';
+import Street from '@salesforce/schema/AccountCleanInfo.Street';
+export default class MapinLWC extends LightningElement {
+
+    mapMarkers=[]
+    marketTitle="Account Map";
+    @wire(getAccounts)
+    wireHandler({data,error})
+    {
+        if(data)
+        {
+            console.log(data);
+            this.formatResponse(data);
+        }
+        else if(error)
+        {
+            console.log(error);
+        }
+    }
+    formatResponse(data)
+    {
+        this.mapMarkers=data.map(item=>{
+            return {
+                location:{
+                    Street:item.billingCity || '',
+                    City:item.billingCity || '',
+                    State:item.billingState || '',
+                    Country:item.billingCountry || '',
+                    PostalCode:item.billingPostalCode || ''
+                },
+                icon:"utility:salesforce1",
+                title:item.Name,
+                value:item.Name,
+                description:item.description
+            }
+        })
+        this.selectMarker = this.mapMarkers.length && this.mapMarkers[0].value;
+    }
+    callMarkerSelect(event)
+    {
+        console.log(event.detail);
+        this.selectMarker=event.detail.selectMarkerValue;
+    }
+}
+
+XML Code :-
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+</LightningComponentBundle>
