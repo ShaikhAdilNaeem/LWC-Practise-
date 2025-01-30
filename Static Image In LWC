@@ -1,0 +1,28 @@
+//How To Config The Static Image In LWC Via Static Resource Using VS Code
+ HTML -
+<template>
+    <lightning-card>
+        <img src={leanitlogo} alt="Lean IT Corp"/>
+    </lightning-card>
+</template>
+
+JS Code -
+
+import { LightningElement } from 'lwc';
+import LEANITLOGO_IMG from '@salesforce/resourceUrl/LeanITLogo';
+export default class StaticImageResource extends LightningElement {
+
+    leanitlogo = LEANITLOGO_IMG;
+}
+
+XML - 
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+</LightningComponentBundle>
