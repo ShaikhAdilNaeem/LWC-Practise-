@@ -1,0 +1,45 @@
+
+Here Are Real Time Show Toast Event Messaging Channel Notification :-
+JS : - 
+import { LightningElement } from 'lwc';
+import { ShowToastEvent} from 'lightning/platformShowToastEvent';
+export default class ShowToastVersion extends LightningElement {
+
+    showToastMessage()
+    {
+        this.ShowToastEvent('Success !!', 'Toast Message Successfully', 'success');
+    }
+    showToastError()
+    {   
+        this.ShowToastEvent('Error !!', 'Toast Message Error', 'error');
+    }
+    ShowToastEvent(title,message,variant)
+    {
+        const event = new ShowToastEvent({
+            title,
+            message,
+            variant,
+    })
+    this.dispatchEvent(event);
+    }
+}
+
+HTML :-
+<template>
+    <div class="slds-p-medium_around">
+        <lightning-card title="Show Toast Event Call">
+            <lightning-button variant="brand" label="Show" onclick={showToastMessage}></lightning-button>
+            <lightning-button variant="brand" label="Error" onclick={showToastError}></lightning-button>
+        </lightning-card>
+    </div>
+</template>
+
+XML :-
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+</LightningComponentBundle>
