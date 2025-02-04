@@ -1,0 +1,35 @@
+HTML :- 
+<template>
+    <lightning-card title="Navigate To Home">
+        <lightning-button variant="brand" label="Go to Home" onclick={handleClick}></lightning-button>
+    </lightning-card>    
+</template>
+
+JS :-
+import { LightningElement } from 'lwc';
+import {NavigationMixin} from 'lightning/navigation';
+import PageName from '@salesforce/schema/LightningExitByPageMetrics.PageName';
+
+export default class NavigationToHome extends NavigationMixin(LightningElement) {
+ 
+    handleClick()
+    {
+        this[NavigationMixin.Navigate]({
+            type:'standard__namedPage',
+            attributes:{
+                pageName:'home'
+            }
+        })
+    }
+}
+
+XML :-
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+</LightningComponentBundle>
